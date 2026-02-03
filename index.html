@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TrekVerse - Adventure Awaits</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: 
+    linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,70,0,0.4)),
+    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070");
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    background-position:center;
+    overflow:hidden;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container{
+    width:380px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(25px);
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    color:white;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 15px 35px rgba(0,0,0,0.5);
+    animation: fadeIn 1.2s ease-out;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform: translateY(30px); }
+    to{ opacity:1; transform: translateY(0); }
+}
+
+.container h2{
+    margin-bottom:20px;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #96c93d;
+}
+
+.input-box{
+    position:relative;
+    margin:15px 0;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px 15px;
+    padding-right: 45px;
+    border:1px solid rgba(255,255,255,0.2);
+    outline:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:16px;
+    transition: 0.4s;
+}
+
+/* Darker Placeholder Text */
+.input-box input::placeholder {
+    color: #222 !important; /* Fully dark color */
+    font-weight: 500;
+    opacity: 1;
+}
+
+.input-box input:focus{
+    border:2px solid #96c93d;
+    background:rgba(255,255,255,0.2);
+}
+
+.eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.9;
+    transition: 0.3s;
+}
+
+.forgot {
+    font-size: 12px;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+.forgot:hover { opacity: 1; color: #96c93d; }
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(45deg, #00b09b, #96c93d);
+    color:white;
+    font-size:16px;
+    font-weight: 600;
+    cursor:pointer;
+    transition: 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0, 176, 155, 0.4);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.toggle-text{
+    margin-top:20px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.success{
+    margin-top:15px;
+    font-size:15px;
+    color:#00ffae;
+    display:none;
+}
+
+@media(max-width:600px){
+    .container{ width:90%; padding:25px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo">🌄 Vertical Hikers</div>
+    <h2 id="formTitle">Explorer Login</h2>
+
+    <form id="loginForm">
+        <div class="input-box">
+            <input type="email" id="email" placeholder="📧 Email Address" required>
+        </div>
+        
+        <div class="input-box">
+            <input type="password" id="password" placeholder="🔒 Password" required>
+            <span onclick="togglePassword()" class="eye" id="eyeIcon">👁️</span>
+        </div>
+
+        <p class="forgot" onclick="alert('Password reset link sent to your email!')">Forgot Password?</p>
+
+        <button type="submit" id="submitBtn">
+            <span id="btnText">Join Trek 🚀</span>
+        </button>
+    </form>
+    
+    <div class="success" id="successMsg"></div>
+
+    <div class="toggle-text" onclick="toggleForm()" id="toggleText">
+        New here? Start your journey ✍️
+    </div>
+</div>
+
+<script>
+function togglePassword(){
+    const pass = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+    if(pass.type === "password"){
+        pass.type = "text";
+        icon.innerHTML = "🙈";
+    } else {
+        pass.type = "password";
+        icon.innerHTML = "👁️";
+    }
+}
+
+let isLogin = true;
+function toggleForm(){
+    const title = document.getElementById("formTitle");
+    const button = document.getElementById("btnText");
+    const toggleText = document.getElementById("toggleText");
+    const success = document.getElementById("successMsg");
+
+    success.style.display = "none";
+
+    if(isLogin){
+        title.innerHTML = "Explorer Sign Up";
+        button.innerHTML = "Register Now 🌟";
+        toggleText.innerHTML = "Already a member? Login 🔐";
+    }else{
+        title.innerHTML = "Explorer Login";
+        button.innerHTML = "Join Trek 🚀";
+        toggleText.innerHTML = "New here? Start your journey ✍️";
+    }
+    isLogin = !isLogin;
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const btnText = document.getElementById("btnText");
+    const submitBtn = document.getElementById("submitBtn");
+    const success = document.getElementById("successMsg");
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailPattern.test(email)){
+        alert("❌ Please enter a valid email address!");
+        return;
+    }
+
+    if(pass.length < 6) {
+        alert("⚠️ Password must be at least 6 characters!");
+        return;
+    }
+
+    submitBtn.disabled = true;
+    btnText.innerHTML = "🔄 Logging in...";
+    
+    setTimeout(() => {
+        submitBtn.disabled = false;
+        btnText.innerHTML = isLogin ? "Join Trek 🚀" : "Register Now 🌟";
+        success.style.display = "block";
+        success.innerHTML = "✅ Success! Welcome to the TrekVerse.";
+        
+        localStorage.setItem("user", email);
+    }, 2000);
+});
+</script>
+
+</body>
+</html>
