@@ -91,7 +91,7 @@ body{
 
 /* Darker Placeholder Text */
 .input-box input::placeholder {
-    color: #222 !important; /* Fully dark color */
+    color: #222 !important;
     font-weight: 500;
     opacity: 1;
 }
@@ -233,6 +233,7 @@ function toggleForm(){
     isLogin = !isLogin;
 }
 
+// Updated JS (Fixed Credentials & Redirect)
 document.getElementById("loginForm").addEventListener("submit", function(e){
     e.preventDefault();
     
@@ -242,12 +243,18 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
     const submitBtn = document.getElementById("submitBtn");
     const success = document.getElementById("successMsg");
 
+    // ✅ Fixed Login Credentials
+    const fixedEmail = "admin@gmail.com";
+    const fixedPassword = "123456";
+
+    // Email Validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(!emailPattern.test(email)){
         alert("❌ Please enter a valid email address!");
         return;
     }
 
+    // Password Validation
     if(pass.length < 6) {
         alert("⚠️ Password must be at least 6 characters!");
         return;
@@ -255,15 +262,25 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
 
     submitBtn.disabled = true;
     btnText.innerHTML = "🔄 Logging in...";
-    
+
     setTimeout(() => {
-        submitBtn.disabled = false;
-        btnText.innerHTML = isLogin ? "Join Trek 🚀" : "Register Now 🌟";
-        success.style.display = "block";
-        success.innerHTML = "✅ Success! Welcome to the TrekVerse.";
-        
-        localStorage.setItem("user", email);
-    }, 2000);
+        // ✅ Check Fixed Login
+        if(email === fixedEmail && pass === fixedPassword){
+            localStorage.setItem("user", email);
+            success.style.display = "block";
+            success.innerHTML = "✅ Success! Redirecting...";
+            
+            // ✅ Redirect to Home Page
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 1000);
+        }
+        else{
+            alert("❌ Invalid Email or Password");
+            submitBtn.disabled = false;
+            btnText.innerHTML = isLogin ? "Join Trek 🚀" : "Register Now 🌟";
+        }
+    }, 1500);
 });
 </script>
 
