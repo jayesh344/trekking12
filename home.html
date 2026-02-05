@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical Hikers | Fort Trekking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #f5f7fa;
+    --text-color: #333;
+    --header-bg: rgba(44, 122, 123, 0.85);
+}
+
+body.dark-theme {
+    --bg-color: #1a202c;
+    --text-color: #f5f7fa;
+}
+
+body{
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+/* HEADER */
+header{
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: var(--header-bg);
+    color:white;
+    padding:10px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.logo img {
+    border-radius: 50%;
+    transition: 0.3s;
+}
+.logo:hover img {
+    transform: rotate(15deg) scale(1.1);
+}
+
+.search-container {
+    flex-grow: 0.3;
+    margin: 0 20px;
+}
+.search {
+    width: 180px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+.search:focus {
+    width: 250px;
+}
+
+/* NAV MENU */
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:20px;
+    align-items: center;
+}
+
+nav ul li{
+    cursor:pointer;
+    position: relative;
+    padding: 10px 0;
+    transition: 0.3s;
+}
+
+nav ul li:hover{
+    color:#ffe066;
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 10px 0;
+    list-style: none;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.dropdown-menu li {
+    padding: 10px 20px;
+    color: #333;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dropdown-menu li:hover {
+    background: #f0f0f0;
+    color: #2c7a7b;
+    padding-left: 25px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* BUTTONS */
+.book-btn{
+    padding:8px 18px;
+    border:none;
+    background:#ff7a18;
+    color:white;
+    border-radius:20px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+.book-btn:hover{
+    background:#ff5200;
+    transform: scale(1.05);
+}
+
+.notification{
+    position:relative;
+    font-size: 20px;
+}
+.notification::after{
+    content:'3';
+    position:absolute;
+    top:-5px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:10px;
+    padding:2px 5px;
+    border-radius:50%;
+    font-weight: bold;
+}
+
+.profile{
+    width:35px;
+    height: 35px;
+    border-radius:50%;
+    cursor:pointer;
+    border: 2px solid #ffe066;
+    transition: 0.3s;
+}
+
+.login-btn{
+    padding:8px 18px;
+    border:none;
+    background: linear-gradient(45deg,#ffe066,#f6ad55);
+    color:black;
+    font-weight: 600;
+    border-radius:20px;
+    cursor:pointer;
+    transition: 0.3s;
+}
+
+#darkMode {
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.4s;
+}
+
+/* MAIN SECTION */
+.main{
+    min-height:80vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position: relative; 
+    background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05));
+    transition: background 1s ease-in-out;
+    overflow: hidden;
+}
+
+/* Caption CSS */
+.fort-caption{
+    position:absolute;
+    bottom:30px;
+    left:40px;
+    color:white;
+    background:rgba(0,0,0,0.4);
+    padding:12px 18px;
+    border-radius:10px;
+    font-size:18px;
+    backdrop-filter: blur(3px);
+    z-index: 10;
+}
+
+/* FOOTER */
+footer{
+    background:#1a202c;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){ .search-container { display: none; } }
+@media(max-width:768px){
+    nav ul{
+        flex-direction:column;
+        background:#2c7a7b;
+        position:absolute;
+        top:60px;
+        right:0;
+        width:200px;
+        display:none;
+        padding:20px;
+        border-radius: 0 0 0 15px;
+    }
+    nav ul.active{ display:flex; }
+    .menu-toggle{ font-size:25px; cursor:pointer; display: block; color: white;}
+    .dropdown-menu { position: relative; width: 100%; background: rgba(0,0,0,0.1); color: white; }
+    .fort-caption { left: 20px; bottom: 20px; font-size: 14px; }
+}
+.menu-toggle { display: none; }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+       <img src="logo.jpg" width="60" alt="Logo">
+       <span>Vertical Hikers</span>
+    </div>
+
+    <div class="search-container">
+        <input type="text" placeholder="Search Fort..." class="search">
+    </div>
+
+    <div class="menu-toggle">☰</div>
+
+    <nav>
+        <ul id="menu">
+            <li>Home</li>
+            <li class="dropdown">📍 Destinations ▾
+                <ul class="dropdown-menu">
+                    <li>Himalaya</li>
+                    <li>Sahyadri</li>
+                    <li>International</li>
+                </ul>
+            </li>
+            <li>🎒 Packages</li>
+            <li class="notification">🔔</li>
+            <li><button class="book-btn">Book Trek</button></li>
+            <li><button class="login-btn">Login</button></li>
+            <li><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile" title="My Profile"></li>
+            <li><span id="darkMode">🌙</span></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="main" id="hero-section">
+    <div id="fort-caption" class="fort-caption"></div>
+</section>
+
+<footer>
+    <p>🌍 Vertical Hikers | Made with ❤️ for Nature Lovers</p>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const menu = document.getElementById('menu');
+
+toggle.addEventListener('click',()=>{
+    menu.classList.toggle('active');
+});
+
+const darkModeBtn = document.getElementById('darkMode');
+darkModeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    darkModeBtn.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+});
+
+const heroSection = document.getElementById('hero-section');
+
+const images = [
+    'fort1.jpeg',
+    'sinhagad.jpeg',
+    'lohgad.jpeg',
+    'devkund.jpeg',
+];
+
+const captions = [
+    "🏰 Shivneri Fort – Birthplace of Chhatrapati Shivaji Maharaj",
+    "⚔️ Sinhagad Fort – Famous for Tanaji Malusare bravery",
+    "🌄 Lohgad Fort – Known for scenic trekking routes",
+    "💧 Devkund Waterfall – Hidden natural paradise trek"
+];
+
+let currentIndex = 0;
+
+// Initial Load logic consistent with the slideshow
+function setHeroContent(index) {
+    if(images[index] === "devkund.jpeg"){
+        heroSection.style.background = `
+        linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+        url('${images[index]}') center/cover no-repeat`;
+        
+        heroSection.innerHTML = `
+            <div style="
+                position:absolute;
+                inset:0;
+                background:url('${images[index]}') center/contain no-repeat;
+                backdrop-filter: blur(8px);
+                z-index:1;">
+            </div>
+            <div id="fort-caption" class="fort-caption" style="z-index:2;">
+                ${captions[index]}
+            </div>
+        `;
+    } else {
+        heroSection.style.background =
+        `linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), 
+        url('${images[index]}') center/cover no-repeat`;
+        heroSection.innerHTML = `
+            <div id="fort-caption" class="fort-caption">
+                ${captions[index]}
+            </div>
+        `;
+    }
+}
+
+// Initial Call
+setHeroContent(0);
+
+function changeBackground() {
+    currentIndex = (currentIndex + 1) % images.length;
+    setHeroContent(currentIndex);
+}
+
+setInterval(changeBackground, 3000);
+
+</script>
+
+</body>
+</html>
